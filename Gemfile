@@ -33,6 +33,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'grape'
+gem 'grape-jbuilder'
+gem 'grape-route-helpers'
+gem 'hashie-forbidden_attributes' # Additionally, if the version of your Rails is 4.0+ and the application uses the default model layer of ActiveRecord, you will want to use the hashie-forbidden_attributes gem. This gem disables the security feature of strong_params at the model layer, allowing you the use of Grape's own params validation instead.
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -42,6 +45,10 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'shoulda-matchers', '~> 3.0'
+end
+
+group :test do
+  gem 'database_cleaner'
 end
 
 
