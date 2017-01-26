@@ -1,24 +1,24 @@
-example_id                                         | status  | run_time        |
--------------------------------------------------- | ------- | --------------- |
-./spec/models/api_key_spec.rb[1:1]                 | unknown |                 |
-./spec/models/api_key_spec.rb[1:2:1]               | unknown |                 |
-./spec/models/api_key_spec.rb[1:2:2]               | unknown |                 |
-./spec/models/api_key_spec.rb[1:2:3]               | unknown |                 |
-./spec/models/restaurant_spec.rb[1:1]              | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:1]            | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:2]            | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:3:1:1]        | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:3:1:2]        | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:3:1:3]        | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:3:2:1]        | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:3:2:2]        | unknown |                 |
-./spec/models/restaurant_spec.rb[1:2:3:2:3]        | unknown |                 |
-./spec/requests/restaurants_spec.rb[1:1:1:1]       | passed  | 0.00756 seconds |
-./spec/requests/restaurants_spec.rb[1:1:1:2]       | passed  | 0.00832 seconds |
-./spec/requests/restaurants_spec.rb[1:1:2:1:1]     | passed  | 0.13652 seconds |
-./spec/requests/restaurants_spec.rb[1:1:2:2:1:1:1] | passed  | 4.45 seconds    |
-./spec/requests/restaurants_spec.rb[1:1:2:2:1:2:1] | passed  | 0.76334 seconds |
-./spec/requests/restaurants_spec.rb[1:1:2:2:2:1]   | passed  | 0.68451 seconds |
-./spec/requests/restaurants_spec.rb[1:1:2:2:3:1]   | passed  | 0.5656 seconds  |
-./spec/requests/restaurants_spec.rb[1:1:2:2:4:1]   | passed  | 2.7 seconds     |
-./spec/requests/restaurants_spec.rb[1:1:2:2:5:1]   | passed  | 1.92 seconds    |
+example_id                                         | status | run_time        |
+-------------------------------------------------- | ------ | --------------- |
+./spec/models/api_key_spec.rb[1:1]                 | passed | 0.13056 seconds |
+./spec/models/api_key_spec.rb[1:2:1]               | passed | 0.85728 seconds |
+./spec/models/api_key_spec.rb[1:2:2]               | passed | 0.00833 seconds |
+./spec/models/api_key_spec.rb[1:2:3]               | passed | 0.02713 seconds |
+./spec/models/restaurant_spec.rb[1:1]              | passed | 0.00463 seconds |
+./spec/models/restaurant_spec.rb[1:2:1]            | passed | 0.00433 seconds |
+./spec/models/restaurant_spec.rb[1:2:2]            | passed | 0.0036 seconds  |
+./spec/models/restaurant_spec.rb[1:2:3:1:1]        | passed | 0.00255 seconds |
+./spec/models/restaurant_spec.rb[1:2:3:1:2]        | passed | 0.00235 seconds |
+./spec/models/restaurant_spec.rb[1:2:3:1:3]        | passed | 0.0021 seconds  |
+./spec/models/restaurant_spec.rb[1:2:3:2:1]        | passed | 0.00228 seconds |
+./spec/models/restaurant_spec.rb[1:2:3:2:2]        | passed | 0.0022 seconds  |
+./spec/models/restaurant_spec.rb[1:2:3:2:3]        | passed | 0.0023 seconds  |
+./spec/requests/restaurants_spec.rb[1:1:1:1]       | passed | 0.78208 seconds |
+./spec/requests/restaurants_spec.rb[1:1:1:2]       | passed | 0.2674 seconds  |
+./spec/requests/restaurants_spec.rb[1:1:2:1:1]     | passed | 0.10723 seconds |
+./spec/requests/restaurants_spec.rb[1:1:2:2:1:1:1] | passed | 0.03036 seconds |
+./spec/requests/restaurants_spec.rb[1:1:2:2:1:2:1] | passed | 0.02505 seconds |
+./spec/requests/restaurants_spec.rb[1:1:2:2:2:1]   | passed | 0.0305 seconds  |
+./spec/requests/restaurants_spec.rb[1:1:2:2:3:1]   | passed | 0.04035 seconds |
+./spec/requests/restaurants_spec.rb[1:1:2:2:4:1]   | passed | 0.03561 seconds |
+./spec/requests/restaurants_spec.rb[1:1:2:2:5:1]   | passed | 0.03699 seconds |

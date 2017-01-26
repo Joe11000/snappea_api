@@ -41,7 +41,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails'
-  gem 'dotenv'
+  gem 'dotenv-rails', groups: [:development, :test]
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'shoulda-matchers', '~> 3.0'
@@ -50,7 +50,6 @@ end
 group :test do
   gem 'database_cleaner'
 end
-
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

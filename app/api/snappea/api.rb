@@ -23,7 +23,6 @@ module Snappea
       end
 
       get '/', jbuilder: 'restaurants/index' do
-        @RESTAURANT_PAGINATION_SIZE = 4
         authorize params[:api_key]
 
         if(Restaurant.count == 0)
@@ -31,20 +30,20 @@ module Snappea
           return
         end
 
-        @last_possible_page_index = (Restaurant.count / @RESTAURANT_PAGINATION_SIZE.to_f).ceil - 1
+        @last_possible_page_index = (Restaurant.count / ENV['RESTAURANT_PAGINATION_SIZE'].to_f).ceil - 1
 
         if params[:page].blank? || params[:page] < 0
           @page_index = 0
-          @limit = @RESTAURANT_PAGINATION_SIZE
+          @limit = ENV['RESTAURANT_PAGINATION_SIZE'].to_i
         elsif (params[:page] - 1) > @last_possible_page_index
           @page_index = @last_possible_page_index
-          @limit = Restaurant.count % @RESTAURANT_PAGINATION_SIZE
+          @limit = Restaurant.count % ENV['RESTAURANT_PAGINATION_SIZE'].to_i
         else
           @page_index = params[:page] - 1
-          @limit = @RESTAURANT_PAGINATION_SIZE
+          @limit = ENV['RESTAURANT_PAGINATION_SIZE'].to_i
         end
 
-        @restaurants = Restaurant.order(:id).limit(@limit).offset(@RESTAURANT_PAGINATION_SIZE * @page_index)
+        @restaurants = Restaurant.order(:id).limit(@limit).offset(ENV['RESTAURANT_PAGINATION_SIZE'].to_i * @page_index)
       end
     end
   end
