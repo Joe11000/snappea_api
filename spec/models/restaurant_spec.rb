@@ -8,6 +8,7 @@ RSpec.describe Restaurant, type: :model do
   context 'model has correct validations' do
     it { is_expected.to validate_presence_of :name}
     it { is_expected.to validate_presence_of :address}
+    it { is_expected.to have_many(:menu_items) }
 
     context 'rating_validation' do
       context 'valid results' do

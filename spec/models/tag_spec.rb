@@ -8,5 +8,4 @@ RSpec.describe Tag, type: :model do
   it { is_expected.to validate_uniqueness_of :name }
   it { is_expected.to have_many :menu_item_tags }
   it { is_expected.to have_many(:menu_items).through(:menu_item_tags) }
-
 end
