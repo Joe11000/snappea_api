@@ -48,25 +48,18 @@ module Snappea
       end
 
 
-
       segment '/:id' do
         resource 'menu_items' do
           desc 'Return a paginated list of restaurants.'
 
           params do
             requires :api_key, type: String
-            optional :page, type: Integer
           end
 
           get '', jbuilder: 'menu_items/index' do
             authorize params[:api_key]
 
-            if(Restaurant.count == 0)
-              @restaurants = []
-              return
-            end
-            debugger
-            @restaurant = Restaurant.includes(menu_items: {menu_item_tags: :tag}).find(params[:id])
+            @restaurant = Restaurant.includes(menu_items: {menu_item_tags: :tag}).find_by(id: params[:id])
           end
         end
       end
