@@ -41,6 +41,7 @@ RSpec.describe Snappea::API, type: :request do
 
             before :each do
               @remainder_size = 1
+              @current_page = 2
 
               (ENV['RESTAURANT_PAGINATION_SIZE'].to_i + @remainder_size).times { FactoryGirl.create(:restaurant) }
             end
@@ -50,13 +51,15 @@ RSpec.describe Snappea::API, type: :request do
 
               restaurants_arr = Restaurant.order(:id).limit(@remainder_size).offset(ENV['RESTAURANT_PAGINATION_SIZE'].to_i).map do |r|
                 json = JSON.parse(r.to_json).slice('id' , 'name', 'description', 'rating', 'address')
-                json['rating'] = r.rating
+                json['rating'] = r.rating.to_f
                 json
               end
 
+              prev_url = "#{request.host}/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page - 1}"
+
               expect(response).to have_http_status(200)
               expect(restaurants_arr.length).to eq @remainder_size
-              expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'prev' => 'prev_url_here'})
+              expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'prev' => prev_url})
             end
           end
 
@@ -83,6 +86,7 @@ RSpec.describe Snappea::API, type: :request do
           before :each do
             @remainder_size = 1
             (ENV['RESTAURANT_PAGINATION_SIZE'].to_i + @remainder_size).times { FactoryGirl.create(:restaurant) }
+            @current_page = 1
           end
 
           it "returns the first pagination page of restaurants" do
@@ -90,13 +94,15 @@ RSpec.describe Snappea::API, type: :request do
 
             restaurants_arr = Restaurant.order(:id).limit(ENV['RESTAURANT_PAGINATION_SIZE'].to_i).map do |r|
               json = JSON.parse(r.to_json).slice('id' , 'name', 'description', 'rating', 'address')
-              json['rating'] = r.rating
+              json['rating'] = r.rating.to_f
               json
             end
 
+            next_url = "#{request.host}/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page + 1}"
+
             expect(response).to have_http_status(200)
             expect(restaurants_arr.length).to eq ENV['RESTAURANT_PAGINATION_SIZE'].to_i
-            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'next' => 'next_url_here'})
+            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'next' => next_url})
           end
         end
 
@@ -106,20 +112,23 @@ RSpec.describe Snappea::API, type: :request do
           before :each do
             @remainder_size = 1
             (ENV['RESTAURANT_PAGINATION_SIZE'].to_i + @remainder_size).times { FactoryGirl.create(:restaurant) }
+            @current_page = 1
           end
 
           it "returns the first pagination page of restaurants" do
-            get "/api/restaurants?api_key=#{api_key.guid}&page=1"
+            get "/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page}"
 
             restaurants_arr = Restaurant.order(:id).limit(ENV['RESTAURANT_PAGINATION_SIZE'].to_i).map do |r|
               json = JSON.parse(r.to_json).slice('id' , 'name', 'description', 'rating', 'address')
-              json['rating'] = r.rating
+              json['rating'] = r.rating.to_f
               json
             end
 
+            next_url = "#{request.host}/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page + 1}"
+
             expect(response).to have_http_status(200)
             expect(restaurants_arr.length).to eq ENV['RESTAURANT_PAGINATION_SIZE'].to_i
-            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'next' => 'next_url_here'})
+            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'next' => next_url})
           end
         end
 
@@ -129,20 +138,24 @@ RSpec.describe Snappea::API, type: :request do
           before :each do
             @remainder_size = 1
             (2 * ENV['RESTAURANT_PAGINATION_SIZE'].to_i + @remainder_size).times { FactoryGirl.create(:restaurant) }
+            @current_page = 2
           end
 
           it "returns the first pagination page of restaurants" do
-            get "/api/restaurants?api_key=#{api_key.guid}&page=2"
+            get "/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page}"
 
             restaurants_arr = Restaurant.order(:id).offset(ENV['RESTAURANT_PAGINATION_SIZE'].to_i).limit(ENV['RESTAURANT_PAGINATION_SIZE'].to_i).map do |r|
               json = JSON.parse(r.to_json).slice('id' , 'name', 'description', 'rating', 'address')
-              json['rating'] = r.rating
+              json['rating'] = r.rating.to_f
               json
             end
 
+            prev_url = "#{request.host}/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page - 1}"
+            next_url = "#{request.host}/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page + 1}"
+
             expect(response).to have_http_status(200)
             expect(restaurants_arr.length).to eq ENV['RESTAURANT_PAGINATION_SIZE'].to_i
-            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'prev' => 'prev_url_here', 'next' => 'next_url_here'})
+            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'prev' => prev_url, 'next' => next_url})
           end
         end
 
@@ -152,20 +165,23 @@ RSpec.describe Snappea::API, type: :request do
           before :each do
             @remainder_size = 1
             (ENV['RESTAURANT_PAGINATION_SIZE'].to_i + @remainder_size).times { FactoryGirl.create(:restaurant) }
+            @current_page = 2
           end
 
           it "returns the first pagination page of restaurants" do
-            get "/api/restaurants?api_key=#{api_key.guid}&page=3"
+            get "/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page}"
 
             restaurants_arr = Restaurant.order(:id).offset(ENV['RESTAURANT_PAGINATION_SIZE'].to_i).limit(ENV['RESTAURANT_PAGINATION_SIZE'].to_i).map do |r|
               json = JSON.parse(r.to_json).slice('id' , 'name', 'description', 'rating', 'address')
-              json['rating'] = r.rating
+              json['rating'] = r.rating.to_f
               json
             end
 
+            prev_url = "#{request.host}/api/restaurants?api_key=#{api_key.guid}&page=#{@current_page - 1}"
+
             expect(response).to have_http_status(200)
             expect(restaurants_arr.length).to eq @remainder_size
-            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'prev' => 'prev_url_here' })
+            expect(JSON.parse(response.body)).to eq ({'restaurants' => restaurants_arr, 'prev' => prev_url })
           end
         end
       end
