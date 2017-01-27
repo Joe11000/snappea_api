@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Snappea::API, type: :request do
 
-  context "GET /api/restaurants/:id/menu_items?api_key=...", checked: true do
+  context "GET /api/restaurants/:id/menu_items?api_key=..." do
     context 'request was unauthorized because' do
       it 'no api_key param was given and returned a 400 error json' do
         get "/api/restaurants/1/menu_items"
@@ -20,7 +20,7 @@ RSpec.describe Snappea::API, type: :request do
     end
 
     context 'request has an authorized api_key' do
-      context 'but no restaurants exist', checked: true do
+      context 'but no restaurants exist' do
         let!(:api_key){ FactoryGirl.create(:api_key) }
 
         it 'return body is an empty set' do
@@ -32,7 +32,7 @@ RSpec.describe Snappea::API, type: :request do
       end
 
       context 'and restaurants exist' do
-        context "but the id param is a restaurant id that doesn't exist", checked: true do
+        context "but the id param is a restaurant id that doesn't exist" do
           let!(:api_key){ FactoryGirl.create(:api_key) }
           let(:restaurant) { FactoryGirl.create(:restaurant) }
 
@@ -44,7 +44,7 @@ RSpec.describe Snappea::API, type: :request do
           end
         end
 
-        context 'but no menu_items exist', checked: true do
+        context 'but no menu_items exist' do
           let!(:api_key){ FactoryGirl.create(:api_key) }
           let(:restaurant) { FactoryGirl.create(:restaurant) }
 
@@ -60,8 +60,8 @@ RSpec.describe Snappea::API, type: :request do
           context 'but no menu_item_tags associations cooresponding to tags exist' do
             let!(:api_key){ FactoryGirl.create(:api_key) }
             before :each do
-              @menu_item = FactoryGirl.create(:menu_items)
-              @restaurant = menu_item.restaurant
+              @menu_item = FactoryGirl.create(:menu_item)
+              @restaurant = @menu_item.restaurant
               unassociated_tag = FactoryGirl.create(:tag)
             end
 
@@ -69,14 +69,14 @@ RSpec.describe Snappea::API, type: :request do
             it 'returns the name of the restaurant and an empty menu_items' do
               get "/api/restaurants/#{@restaurant.id}/menu_items?api_key=#{api_key.guid}"
 
-              menu_item_attrs = @menu_item.pluck(:name, :description, :menu_category)
+              menu_item_attrs = { 'id' => @menu_item.id, 'name' => @menu_item.name, 'description' => @menu_item.description, 'menu_category' => @menu_item.menu_category, 'tags' => [] }
 
               expect(response).to have_http_status(200)
-              expect(JSON.parse(response.body)).to eq ({"restaurant"=> @restaurant.name, "menu_items"=> menu_item_attrs})
+              expect(JSON.parse(response.body)).to eq ({"restaurant"=> @restaurant.name, "menu_items"=> [menu_item_attrs]})
             end
           end
 
-          context 'menu_item_tags associations cooresponding to tags exist', focus: true do
+          context 'menu_item_tags associations cooresponding to tags exist' do
             let!(:api_key){ FactoryGirl.create(:api_key) }
 
             before :each do
@@ -95,20 +95,18 @@ RSpec.describe Snappea::API, type: :request do
               expected_response = {'restaurant' => @restaurant.name, "menu_items" => []}
 
               @restaurant.menu_items.each do |menu_item|
-                expected_response['menu_items'] << {'id' => menu_item.id,
-                                                    'name' => menu_item.name,
-                                                    'description' => menu_item.description,
-                                                    'menu_category' => menu_item.menu_category,
-                                                    'tags' => menu_item.tags.pluck(:name)
+                expected_response['menu_items'] << {
+                                                      'id' => menu_item.id,
+                                                      'name' => menu_item.name,
+                                                      'description' => menu_item.description,
+                                                      'menu_category' => menu_item.menu_category,
+                                                      'tags' => menu_item.tags.pluck(:name)
                                                     }
               end
 
 
               expect(response).to have_http_status(200)
               expect(JSON.parse(response.body)).to eq expected_response
-
-
-
             end
           end
         end
