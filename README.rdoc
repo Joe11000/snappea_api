@@ -1,5 +1,9 @@
 1) bundle install
 
-2) run db:create, db:migrate, db:seed
+2) rake db:create, db:migrate, db:seed
 
-3)
+3) ( The seeds file will print out the 2 urls that can be used to test the restaurants endpoint and the menu_items endpoint. )
+
+4) rails s
+
+5) Hire Joe
