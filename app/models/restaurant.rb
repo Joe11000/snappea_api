@@ -1,8 +1,8 @@
 class Restaurant < ActiveRecord::Base
   validates :name, presence: true
   validates :address, presence: true
-  validate :rating_validation
-  has_many :menu_items
+  validate  :rating_validation
+  has_many  :menu_items
 
   def rating_validation
     unless (0..5).include?(rating.to_f) && rating.to_s.match(/^\d{1}.\d{1}$/)

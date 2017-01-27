@@ -9,6 +9,8 @@
 api_key = FactoryGirl.create(:api_key)
 puts "api endpoint = localhost:3000/api/restaurants?api_key=#{api_key.guid}&page=1"
 
-25.times do
-  FactoryGirl.create(:restaurant)
+num = 25
+
+num.times do
+  FactoryGirl.create(:menu_item_tag)
 end
