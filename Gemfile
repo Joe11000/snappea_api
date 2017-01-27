@@ -34,7 +34,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'grape'
 gem 'grape-jbuilder'
-gem 'grape-route-helpers'
 gem 'hashie-forbidden_attributes' # Additionally, if the version of your Rails is 4.0+ and the application uses the default model layer of ActiveRecord, you will want to use the hashie-forbidden_attributes gem. This gem disables the security feature of strong_params at the model layer, allowing you the use of Grape's own params validation instead.
 
 group :development, :test do

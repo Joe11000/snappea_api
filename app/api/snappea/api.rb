@@ -1,6 +1,5 @@
 module Snappea
   include Rails.application.routes.url_helpers
-  include GrapeRouteHelpers::NamedRouteMatcher
 
   class API < Grape::API
     version 'v1', using: :param
@@ -33,7 +32,6 @@ module Snappea
         end
 
         @last_possible_page_index = (Restaurant.count / ENV['RESTAURANT_PAGINATION_SIZE'].to_f).ceil - 1
-        @url = restaurants_path
 
         if params[:page].blank? || params[:page] < 0
           @page_index = 0

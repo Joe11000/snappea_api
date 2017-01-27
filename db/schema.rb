@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170125171704) do
+ActiveRecord::Schema.define(version: 20170127002743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,28 @@ ActiveRecord::Schema.define(version: 20170125171704) do
     t.datetime "updated_at",            null: false
   end
 
+  create_table "menu_item_tags", force: :cascade do |t|
+    t.integer  "menu_item_id"
+    t.integer  "tag_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "menu_item_tags", ["menu_item_id"], name: "index_menu_item_tags_on_menu_item_id", using: :btree
+  add_index "menu_item_tags", ["tag_id"], name: "index_menu_item_tags_on_tag_id", using: :btree
+
+  create_table "menu_items", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "menu_category"
+    t.integer  "restaurant_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "menu_items", ["name"], name: "index_menu_items_on_name", using: :btree
+  add_index "menu_items", ["restaurant_id"], name: "index_menu_items_on_restaurant_id", using: :btree
+
   create_table "restaurants", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -31,4 +53,13 @@ ActiveRecord::Schema.define(version: 20170125171704) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "menu_item_tags", "menu_items"
+  add_foreign_key "menu_item_tags", "tags"
+  add_foreign_key "menu_items", "restaurants"
 end
