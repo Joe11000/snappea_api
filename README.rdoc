@@ -6,4 +6,6 @@
 
 4) rails s
 
-5) Hire Joe
+5) Curl the urls or just paste them in a browser's search bar
+
+6) Hire Joe
